@@ -1,47 +1,98 @@
-SCUFF-EM is a free open-source software suite for boundary-element
-analysis of problems in computational electromagnetism and related
-fields.
+========
+SCUFF-EM
+========
 
-SCUFF-EM stands for 
+SCUFF-EM is a free open-source software suite for boundary-element analysis of
+problems in computational electromagnetism and related fields.
 
- Surface-CUrrent-Field Formulation of ElectroMagnetism
+SCUFF-EM stands for
 
-For documentation and further information on SCUFF-EM, and to 
-download binary and source packages, visit the SCUFF-EM homepage:
+    Surface-CUrrent-Field Formulation of ElectroMagnetism
+
+For documentation and further information on SCUFF-EM, and to download binary
+and source packages, visit the SCUFF-EM homepage:
 
 http://www.homerreid.com/scuff-em
 
-The SCUFF-EM distribution includes the following components: 
-  
- -- libscuff, a C++ library that implements the basic boundary-element 
-    solver functionality 
+The SCUFF-EM distribution includes the following components:
 
- -- a number of ancillary C++ libraries implementing utility functions
+* libscuff, a C++ library that implements the basic boundary-element
+  solver functionality
 
- -- a collection of simple C++ code examples demonstrating how to use 
-    the libscuff API
+* a number of ancillary C++ libraries implementing utility functions
 
- -- a collection of standalone application programs, built atop 
-    libscuff and its associated libraries, for solving specialized
-    problems in computational electromagnetism and related fields. 
+* a collection of simple C++ code examples demonstrating how to use
+  the libscuff API
 
-The standalone application programs distributed with SCUFF-EM 
+* a collection of standalone application programs, built atop
+  libscuff and its associated libraries, for solving specialized problems in
+  computational electromagnetism and related fields.
+
+The standalone application programs distributed with SCUFF-EM
 include the following:
 
- -- scuff-scatter: A comprehensive tool for computing the fields
-                   scattered from arbitrary geometries irradiated
-                   by arbitrary user-specified incident fields
+``scuff-scatter``:
+    A comprehensive tool for computing the fields scattered from arbitrary
+    geometries irradiated by arbitrary user-specified incident fields
 
 
- -- scuff-RF:      A tool for analyzing passive RF and microwave 
-                   devices: RF antennas, coaxial cables, MRI coils,
-                   lumped-element passives, etc. 
-                   scuff-RF can compute 
+``scuff-RF``:
+    A tool for analyzing passive RF and microwave devices: RF antennas, coaxial
+    cables, MRI coils, lumped-element passives, etc. scuff-RF can compute
 
- -- scuff-cas2D
- -- scuff-cas3D
- -- scuff-caspol:  Tools for computing Casimir forces between 2D and 
-                   3D objects of arbitrary geometries and material 
-                   properties, as well as Casimir-Polder potentials for
-                   polarizable molecules in the vicinity of complex
-                   material surfaces.
+``scuff-cas2D``, ``scuff-cas3D``, ``scuff-caspol``:
+    Tools for computing Casimir forces between 2D and 3D objects of arbitrary
+    geometries and material properties, as well as Casimir-Polder potentials
+    for polarizable molecules in the vicinity of complex material surfaces.
+
+
+Install scuff-em
+================
+
+Dependencies
+------------
+* libtool
+* bison
+* flex
+
+* liblapack-dev
+* libblas-dev
+* libhdf5-serial-dev
+* python-dev
+* gmsh
+
+* (python3-pytest or python-pytest)
+* probably missing dependencies are: cmake, build-essentials...
+
+From git repository
+-------------------
+Checkout the main module and the submodules::
+
+    git clone http://github.com/derNarr/scuff-em.git
+    # or git clone http://homerreid.com/scuff-em.git
+    git submodule init
+    git submodule update  # modules will be added from homerreid.com
+
+Now run ./autogen.sh::
+
+    cd scuff-em
+    ./autogen --prefix=${HOME}/scuff-em
+    make
+    make install
+
+Add executables to path::
+
+    export PATH=${HOME}/scuff-em/bin/:$PATH
+
+Run tests::
+
+    cd unitTests/py_tests
+    py.test
+
+
+Tested System
+-------------
+* Ubuntu 14.04
+* lex 2.5.35
+* yacc bison (GNU Bison) 3.0.2
+
