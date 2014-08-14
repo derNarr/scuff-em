@@ -1,0 +1,5 @@
+OBJECT Tetrahedron
+    MESHFILE tetrahedron_6.msh
+    MATERIAL CONST_EPS_10.0
+ENDOBJECT
+
