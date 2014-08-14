@@ -68,7 +68,7 @@ From git repository
 -------------------
 Checkout the main module and the submodules::
 
-    git clone http://github.com/derNarr/scuff-em.git
+    git clone https://github.com/derNarr/scuff-em.git
     # or git clone http://homerreid.com/scuff-em.git
     git submodule init
     git submodule update  # modules will be added from homerreid.com
