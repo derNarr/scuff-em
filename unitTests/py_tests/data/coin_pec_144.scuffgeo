@@ -1,0 +1,5 @@
+OBJECT TheCoin
+    MESHFILE coin_144.msh
+    MATERIAL PEC
+ENDOBJECT
+

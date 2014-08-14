@@ -100,3 +100,8 @@ scuff.pyc
 # Compiled programs #
 #####################
 tests/scuff-test-overlap
+
+# Temporary python files #
+##########################
+*.pyc
+__pychache__/
