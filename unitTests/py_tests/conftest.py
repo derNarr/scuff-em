@@ -10,7 +10,14 @@ import sys
 
 import pytest
 
-from helper import DATA
+
+TEMP_DIR = tempfile.mkdtemp(prefix="scuffem_pytests_")
+
+SCUFF_CASPOL_CMD = "scuff-caspol "
+DATA = "./data"
+
+RELTOL = 0.1  # relative tolerance
+RELTOL_VALIDATE = 0.30  # relative tolerance for validation code
 
 
 def pytest_addoption(parser):
@@ -26,6 +33,10 @@ def pytest_runtest_setup(item):
         pytest.skip("need --validate-scuff option to run")
 
 
+def pytest_report_header(config):
+    return "temporary files are stored in {path}".format(path=TEMP_DIR)
+
+
 @pytest.fixture(scope="session")
 def create_temp(request):
     """
@@ -35,7 +46,7 @@ def create_temp(request):
     """
     old_path = os.getcwd()
     print(old_path)
-    path = tempfile.mkdtemp(prefix="scuff-em_py-tests_temporary-files")
+    path = TEMP_DIR
     try:
         for file_ in os.listdir(DATA):
             shutil.copy(os.path.join(DATA, file_), path)

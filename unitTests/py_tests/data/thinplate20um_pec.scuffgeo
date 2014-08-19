@@ -1,5 +1,5 @@
 OBJECT TheCoin
-    MESHFILE thinplate.msh
+    MESHFILE thinplate20um.msh
     MATERIAL PEC
 ENDOBJECT
 

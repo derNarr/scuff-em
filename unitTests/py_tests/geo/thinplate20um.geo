@@ -1,9 +1,9 @@
 // GMSH geometry file for a infinitesimally thin plate
 
-R=2.0;  // disc radius
+R=20.0;  // disc radius
 
-lf = 0.0001;  // fine   meshing fineness
-lc = 1;  // coarse meshing fineness
+lf = 0.5;  // fine   meshing fineness
+lc = 5;  // coarse meshing fineness
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////

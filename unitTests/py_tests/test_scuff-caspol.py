@@ -16,8 +16,9 @@ import os
 
 import pytest
 
-from helper import (SCUFF_CASPOL_CMD, RELTOL_VALIDATE, read_file,
-                    assert_rel_tol)
+from helper import read_file, assert_rel_tol
+from conftest import SCUFF_CASPOL_CMD, RELTOL_VALIDATE
+
 
 slow = pytest.mark.slow
 validation = pytest.mark.validation
@@ -31,7 +32,7 @@ def pecplate_fast(create_temp):
 
 @pytest.fixture(scope="module")
 def pecplate_validate(create_temp):
-    os.system(SCUFF_CASPOL_CMD + "--EPFILE distvalidate.txt --atom Rubidium --PECPlate --Temperature 1")
+    os.system(SCUFF_CASPOL_CMD + "--EPFILE distvalidate.txt --atom Rubidium --PECPlate")
     return {"byXi": "PECPlate.byXi",
             "out": "PECPlate.out"}
 
@@ -55,10 +56,18 @@ def coin(create_temp):
 
 
 @pytest.fixture(scope="module")
-def thinplate(create_temp):
-    os.system(SCUFF_CASPOL_CMD + "--EPFILE distvalidate.txt --atom Rubidium --geometry thinplate_pec.scuffgeo --Temperature 1")
-    return {"byXi": "thinplate_pec.byXi",
-            "out": "thinplate_pec.out"}
+def thinplate20um(create_temp):
+    os.system(SCUFF_CASPOL_CMD + "--EPFILE distvalidate_longrange.txt --atom Rubidium --geometry thinplate20um_pec.scuffgeo")
+    return {"byXi": "thinplate20um_pec.byXi",
+            "out": "thinplate20um_pec.out"}
+
+
+@pytest.fixture(scope="module")
+def thinplate2nm(create_temp):
+    os.system(SCUFF_CASPOL_CMD + "--EPFILE distvalidate_shortrange.txt --atom Rubidium --geometry thinplate2nm_pec.scuffgeo")
+    return {"byXi": "thinplate2nm_pec.byXi",
+            "out": "thinplate2nm_pec.out"}
+
 
 def validate_long_short_range(datas):
     r"""
@@ -77,11 +86,11 @@ def validate_long_short_range(datas):
     def u_sr(zz):
         return -0.0138 / zz**3
     def u_lr(zz):
-        return -8.83e-5 / zz**4
+        return -1.11e-3 / zz**4
     for xx, yy, zz, cp_pot in datas:
         if zz <= 0.001:
             assert_rel_tol(cp_pot, u_sr(zz), RELTOL_VALIDATE)
-        elif zz >= 0.02:
+        elif zz >= 1.00:
             assert_rel_tol(cp_pot, u_lr(zz), RELTOL_VALIDATE)
         else:
             # not testable
@@ -89,8 +98,15 @@ def validate_long_short_range(datas):
 
 
 @validation
-def test_thinplate(thinplate):
-    with open(thinplate["out"], "r") as out_file:
+def test_thinplate20um(thinplate20um):
+    with open(thinplate20um["out"], "r") as out_file:
+        datas = read_file(out_file)
+    validate_long_short_range(datas)
+
+
+@validation
+def test_thinplate2nm(thinplate2nm):
+    with open(thinplate2nm["out"], "r") as out_file:
         datas = read_file(out_file)
     validate_long_short_range(datas)
 
@@ -198,8 +214,6 @@ def test_infinite_plate_xi0(pecplate_fast):
                 assert_rel_tol(cp_pot, -7.418665e-04)
             elif zz == 10.0:
                 assert_rel_tol(cp_pot, -7.418665e-07)
-            else:
-                raise ValueError("TEST: no comparison value for zz={zz:e}, xi={xi:e}".format(zz=zz, xi=xi))
 
 
 def test_infinite_plate_xi6(pecplate_fast):
@@ -214,6 +228,4 @@ def test_infinite_plate_xi6(pecplate_fast):
                 assert_rel_tol(cp_pot, -2.523156e-07)
             elif zz == 10.0:
                 assert_rel_tol(cp_pot, -2.712012e-55)
-            else:
-                raise ValueError("TEST: no comparison value for zz={zz:e}, xi={xi:e}".format(zz=zz, xi=xi))
 

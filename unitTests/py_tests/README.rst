@@ -21,7 +21,7 @@ or for slower tests (minutes to hours)::
     py.test --runslow
 
 or in order to validate the ``scuff-em`` installation against known
-semi-analytical results (hours to days)::
+semi-analytical results (hours -- at the moment 10 minutes on 4 cores)::
 
     py.test --validate-scuff
 

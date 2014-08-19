@@ -8,11 +8,7 @@ import math
 import pytest
 
 
-SCUFF_CASPOL_CMD = "scuff-caspol "
-DATA = "./data"
-
-RELTOL = 0.1  # relative tolerance
-RELTOL_VALIDATE = 0.01  # relative tolerance for validation code
+from conftest import RELTOL
 
 
 def read_file(file_):
