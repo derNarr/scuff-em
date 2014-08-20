@@ -63,6 +63,8 @@ libtool
 INSTALL
 ylwrap
 py-compile
+compile
+test-driver
 
 # Packages #
 ############
@@ -100,8 +102,18 @@ scuff.pyc
 # Compiled programs #
 #####################
 tests/scuff-test-overlap
+interactiveTests/scuff-test-Ewald
+interactiveTests/scuff-test-overlap
+unitTests/unit-test-BEMMatrix
+unitTests/unit-test-PFT
+unitTests/unit-test-PFT.data
+unitTests/unit-test-PPIs
+src/applications/scuff-static/scuff-static
+src/applications/scuff-tmatrix/scuff-tmatrix
+src/libs/libIncField/tPointSource
 
 # Temporary python files #
 ##########################
 *.pyc
 __pychache__/
+
