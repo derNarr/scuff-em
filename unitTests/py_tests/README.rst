@@ -50,12 +50,12 @@ unitTests/py_tests/geo
 
 Files
 -----
-Files describing the tests:
+Exemplary files describing the tests:
 
 test_scuff-caspol.py
     python script that states the different tests.
 
-Files needed for these tests are:
+Files needed for these tests are stored in ``data/``:
 
 dist.txt
     containing the distances that will be calculated. They are given in
