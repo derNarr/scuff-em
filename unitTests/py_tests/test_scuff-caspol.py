@@ -50,6 +50,18 @@ def tetrahedron_eps10(create_temp):
 
 
 @pytest.fixture(scope="module")
+def tetrahedron_eps10_material_function(create_temp):
+    os.system(SCUFF_CASPOL_CMD + "--EPFILE dist.txt --atom Rubidium --geometry tetrahedron_eps10_material_function.scuffgeo --Xi 6.0")
+    return {"byXi": "tetrahedron_eps10_material_function.byXi"}
+
+
+@pytest.fixture(scope="module")
+def tetrahedron_eps10_material_file(create_temp):
+    os.system(SCUFF_CASPOL_CMD + "--EPFILE dist.txt --atom Rubidium --geometry tetrahedron_eps10_material_file.scuffgeo --Xi 6.0")
+    return {"byXi": "tetrahedron_eps10_material_file.byXi"}
+
+
+@pytest.fixture(scope="module")
 def coin(create_temp):
     os.system(SCUFF_CASPOL_CMD + "--EPFILE dist.txt --atom Rubidium --geometry coin_pec_144.scuffgeo --XiFile freq.txt")
     return {"byXi": "coin_pec_144.byXi"}
@@ -200,6 +212,23 @@ def test_tetrahedron_eps10_xi6(tetrahedron_eps10):
                 assert_rel_tol(cp_pot, -3.089228e-58)
             else:
                 raise ValueError("TEST: no comparison value for zz={zz:e}, xi={xi:e}".format(zz=zz, xi=xi))
+
+
+def test_material(tetrahedron_eps10, tetrahedron_eps10_material_function,
+                  tetrahedron_eps10_material_file):
+    with open(tetrahedron_eps10["byXi"], "r") as out_file:
+        datas = read_file(out_file)
+    with open(tetrahedron_eps10_material_function["byXi"], "r") as out_file:
+        datas_func = read_file(out_file)
+    with open(tetrahedron_eps10_material_file["byXi"], "r") as out_file:
+        datas_file = read_file(out_file)
+    xi = 6.0
+    for zz in (0.1, 1.0, 10.0):
+        cp_pot = [data[5] for data in datas if (data[2] == zz and data[3] == xi)][0]
+        cp_pot_func = [data[5] for data in datas_func if (data[2] == zz and data[3] == xi)][0]
+        cp_pot_file = [data[5] for data in datas_file if (data[2] == zz and data[3] == xi)][0]
+        assert_rel_tol(cp_pot, cp_pot_func, reltol=0.01)
+        assert_rel_tol(cp_pot, cp_pot_file, reltol=0.01)
 
 
 def test_infinite_plate_xi0(pecplate_fast):

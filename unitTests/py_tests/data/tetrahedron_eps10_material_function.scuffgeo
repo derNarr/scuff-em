@@ -1,0 +1,12 @@
+MATERIAL Eps10Function
+    constant = 10.0
+
+    Eps(w) = constant
+
+ENDMATERIAL
+
+OBJECT Tetrahedron
+    MESHFILE tetrahedron_6.msh
+    MATERIAL Eps10Function
+ENDOBJECT
+

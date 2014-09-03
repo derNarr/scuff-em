@@ -1,0 +1,5 @@
+OBJECT Tetrahedron
+    MESHFILE tetrahedron_6.msh
+    MATERIAL FILE_MaterialEps10.dat
+ENDOBJECT
+

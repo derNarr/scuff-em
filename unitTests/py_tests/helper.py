@@ -37,6 +37,15 @@ def assert_rel_tol(scuff, theory, reltol=RELTOL):
     asserts if the scuff number and the theory number are within the relative
     tolerance reltol.
 
+    Parameters
+    ----------
+    scuff : float
+        calculated value
+    theory : float
+        reference value
+    reltol : float
+        relative tolerance in proportions and therefore >0.
+
     """
     #__tracebackhide__ = True
     quotient = scuff / theory
